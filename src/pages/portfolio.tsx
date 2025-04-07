@@ -1,42 +1,66 @@
 import { NButton } from "@/components/button";
-import { NInput } from "@/components/input";
-import { MixText } from "@/components/mix-text";
-import { Download, Mail } from "lucide-react";
+import StaggeredText from "@/components/staggered-text";
+import transition from "@/components/transition";
+import { Download, Github, Linkedin, Instagram, Copy, Mail } from "lucide-react";
 
 const PortfolioApp = () => {
 	return (
 		<main className="h-screen overflow-y-scroll snap-y snap-mandatory">
 			<section className="bg-main flex flex-col py-8 gap-5 px-60 h-screen snap-start">
-				<div className="flex h-[2.75rem] flex-row justify-between">
-					<div className="flex gap-2 flex-row">
-						<NInput leftIcon={<Mail />} value="tejadarevertlaurence" disabled />
-						<NButton className="h-full w-[2.75rem]" variant="default">
-							<Download />
+				<div className="flex h-[2.75rem] flex-row items-center justify-between">
+					<div className="h-full  flex flex-row gap-2">
+						<div className="flex flex-row items-center px-[.75rem] py-[.5rem] gap-2.5 bg-main border-2 border-border shadow-shadow h-full">
+							<Mail />
+							<div className="w-[2px] h-9 bg-black"></div>
+							<input
+								type="text"
+								className="h-full text-sm w-[13.75rem]"
+								value="tejadarevertlaurence@gmail.com"
+								disabled
+							/>
+						</div>
+						<NButton className="w-[2.75rem] h-[2.75]" size="icon" variant="default">
+							<Copy style={{ width: "1.375rem", height: "1.375rem" }} />
 						</NButton>
 					</div>
-					<NButton className="w-40" variant="default">
-						RESUME <Download />
-					</NButton>
+
+					<div className="flex flex-row gap-5 h-full">
+						<div className="flex flex-row gap-2 h-full ">
+							<NButton className="h-full w-[2.75rem]" size="icon" variant="default">
+								<Github style={{ width: "1.5rem", height: "1.5rem" }} />
+							</NButton>
+							<NButton className="h-full w-[2.75rem]" size="icon" variant="default">
+								<Linkedin style={{ width: "1.5rem", height: "1.5rem" }} />
+							</NButton>
+							<NButton className="h-full w-[2.75rem]" size="icon" variant="default">
+								<Instagram style={{ width: "1.5rem", height: "1.5rem" }} />
+							</NButton>
+						</div>
+
+						<NButton className="h-full " variant="default">
+							Resume <Download />
+						</NButton>
+					</div>
 				</div>
-				<div className="flex flex-col gap-4 flex-1 items-center justify-center">
-					<span className="text-2xl">HELLO WORLD!</span>
-					<h1 className="text-7xl text-center">
+
+				<div className="flex flex-col flex-1 items-center justify-center">
+					<span className="text-3xl">Hello World!</span>
+					<h1 className="text-9xl leading-none font-black text-center m-0">
 						I'M{" "}
 						<span className="inline-block">
-							<MixText label="LAURENCE" />
+							<StaggeredText href="https://example.com">JOHNDOE</StaggeredText>
 						</span>
 					</h1>
-					<span className="text-2xl">An Aspiring Front-End Developer & UI/UX Designer</span>
+					<span className="text-3xl font-semibold">
+						An Aspiring Front-End Developer & UI/UX Designer
+					</span>
 				</div>
 			</section>
-
-			<section className="py-5 gap-5 px-40 h-screen snap-start">
-				<main className="flex flex-col gap-5 h-full w-full"></main>
+			<section className="">
+				<div className="h-screen bg-black"></div>
 			</section>
-
-			<section className="h-screen bg-black snap-start"></section>
 		</main>
 	);
 };
 
-export default PortfolioApp;
+export default transition(PortfolioApp) ;
