@@ -1,14 +1,12 @@
-import * as React from "react";
 import { NButton } from "@/components/button";
 import { NInput } from "@/components/input";
-import { NProgress } from "@/components/progress";
 import { MixText } from "@/components/mix-text";
-import { Download, Instagram, Linkedin, Github, Mail } from "lucide-react";
+import { Download, Mail } from "lucide-react";
 
 const PortfolioApp = () => {
 	return (
 		<main className="h-screen overflow-y-scroll snap-y snap-mandatory">
-			<section className="flex flex-col py-8 gap-5 px-60 h-screen snap-start">
+			<section className="bg-main flex flex-col py-8 gap-5 px-60 h-screen snap-start">
 				<div className="flex h-[2.75rem] flex-row justify-between">
 					<div className="flex gap-2 flex-row">
 						<NInput leftIcon={<Mail />} value="tejadarevertlaurence" disabled />
