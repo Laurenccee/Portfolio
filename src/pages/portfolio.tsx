@@ -1,6 +1,8 @@
 import { NButton } from "@/components/button";
 import StaggeredText from "@/components/staggered-text";
-import transition from "@/components/transition";
+import transition from "@/components/transitions/transition";
+import { Link } from "react-router-dom";
+
 import { Download, Github, Linkedin, Instagram, Copy, Mail } from "lucide-react";
 
 const PortfolioApp = () => {
@@ -47,9 +49,9 @@ const PortfolioApp = () => {
 					<span className="text-3xl">Hello World!</span>
 					<h1 className="text-9xl leading-none font-black text-center m-0">
 						I'M{" "}
-						<span className="inline-block">
-							<StaggeredText href="https://example.com">JOHNDOE</StaggeredText>
-						</span>
+						<Link to="/next">
+							<StaggeredText href="/next">JOHNDOE</StaggeredText>
+						</Link>
 					</h1>
 					<span className="text-3xl font-semibold">
 						An Aspiring Front-End Developer & UI/UX Designer
@@ -63,4 +65,4 @@ const PortfolioApp = () => {
 	);
 };
 
-export default transition(PortfolioApp) ;
+export default transition(PortfolioApp);
