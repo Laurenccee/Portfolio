@@ -27,7 +27,7 @@ const AboutMe = () => {
         <div className="flex flex-row h-full gap-5 w-[60rem] justify-center items-center ">
           <div className="flex border-4 text-white shadow-shadow border-white w-[26.75rem] aspect-square">
             <img
-              src="src\assets\profile.png"
+              src="public/profile.png"
               alt="Profile"
               className="w-full h-full object-cover object-top"
             />

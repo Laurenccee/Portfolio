@@ -25,7 +25,7 @@ const Projects = () => {
         </Reveal>
         <div className="flex flex-row gap-5 h-full w-[60rem] justify-center items-center ">
           <img
-            src="src/assets/AlertMate.svg"
+            src="public/AlertMate.svg"
             alt="AlertMate"
             className="max-h-[32rem] object-contain flex-1"
           />
