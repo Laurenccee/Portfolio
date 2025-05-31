@@ -3,21 +3,25 @@
 @tailwind utilities;
 
 * {
-	font-family: "Karla", sans-serif;
+	font-family: "Array", sans-serif;
 	font-optical-sizing: auto;
-	font-weight: bold;
-	font-style: normal;
 }
-
+body {
+	background: #000;
+}
 ::-webkit-scrollbar {
 	display: none;
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
 
 :root {
+	--text: #101707;
+	--primary: #97ca49;
+	--secondary: #08cb75;
+	--accent: #9b71d6;
 	--main: #efece6;
-	--overlay: rgba(0, 0, 0, 0.8); /* background color overlay for alert dialogs, modals, etc. */
+	--overlay: rgba(0, 0, 0, 0.8);
 
 	--bg: #efece6;
 	--bw: #fff; /* white and secondary black e.g. utility class variant would be: bg-[#fff] dark:bg-[#212121] */
@@ -37,4 +41,5 @@
 	--heading-font-weight: 700;
 
 	--shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px;
+	--light: var(--box-shadow-x) var(--box-shadow-y) 0px 0px rgba(255, 255, 255);
 }

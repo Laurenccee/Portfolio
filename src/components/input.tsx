@@ -1,43 +1,39 @@
-import { useState } from "react";
-import { Download, Github, Linkedin, Instagram, Mail } from "lucide-react";
-import React from "react";
+import { useRef } from "react";
 
-const Input = () => {
-	const [value, setValue] = useState("tejadarevertlaurence@gmail.com");
+type InputProps = {
+  icon?: React.ReactNode;
+  placeholder?: string;
+  type?: string;
+  name?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-	// Create a ref for the span element
-	const spanRef = React.useRef<HTMLSpanElement>(null);
+const Input = ({
+  icon,
+  placeholder,
+  type = "text",
+  name,
+  value,
+  onChange,
+}: InputProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
 
-	// Function to handle value change
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(e.target.value);
-	};
-
-	return (
-		<div className="flex flex-row items-center gap-2.5 bg-main border-2 border-border shadow-shadow h-full">
-			<Mail />
-
-			{/* Invisible span for measuring the width of the input text */}
-			<span
-				ref={spanRef}
-				className="absolute invisible"
-				style={{ whiteSpace: "pre", fontSize: "0.875rem" }}
-			>
-				{value}
-			</span>
-
-			{/* The input width will be based on the span's width */}
-			<input
-				type="text"
-				value={value}
-				onChange={handleChange}
-				className="h-full text-sm"
-				style={{
-					width: spanRef.current ? `${spanRef.current.offsetWidth}px` : "auto", // Adjust width based on span width
-				}}
-			/>
-		</div>
-	);
+  return (
+    <div className=" flex flex-row items-center px-[.75rem] py-[.5rem] gap-2.5 bg-black rounded-base border-4 border-white shadow-shadow w-full h-[2.75rem]">
+      {icon}
+      <div className="w-[2px] rounded-base h-5 bg-white"></div>
+      <input
+        ref={inputRef}
+        type={type}
+        value={value}
+        onChange={onChange}
+        className="h-full text-white bg-black font-normal w-full focus:outline-none placeholder:text-white"
+        placeholder={placeholder}
+        name={name}
+      />
+    </div>
+  );
 };
 
 export default Input;

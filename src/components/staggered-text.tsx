@@ -18,7 +18,7 @@ const StaggeredText: React.FC<StaggeredLinkProps> = ({ children, href, className
 			initial="initial"
 			whileHover="hovered"
 			href={href}
-			className={`relative  inline-flex items-center overflow-hidden whitespace-nowrap uppercase ${className}`}
+			className={`relative inline-flex items-center overflow-hidden whitespace-pre ${className}`}
 			style={{
 				lineHeight: 0.85, // Ensure proper line height for vertical alignment
 			}}
@@ -36,7 +36,7 @@ const StaggeredText: React.FC<StaggeredLinkProps> = ({ children, href, className
 								delay: STAGGER * i,
 								ease: "easeInOut",
 							}}
-							className="inline-block font-black"
+							className="inline-block font-normal"
 							key={i}
 						>
 							{l}
@@ -57,7 +57,7 @@ const StaggeredText: React.FC<StaggeredLinkProps> = ({ children, href, className
 								delay: STAGGER * i,
 								ease: "easeInOut",
 							}}
-							className="inline-block font-black"
+							className="inline-block font-normal"
 							key={i}
 						>
 							{l}

@@ -1,54 +1,110 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import Typewrite from "@/components/typewiter-text";
+import { Link } from "react-router-dom";
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-interface HackingTextProps {
-	label?: string;
+interface GlitchyTextProps {
+  initialLabel: string;
+  finalLabel: string;
+  glitchDuration?: number;
+  shuffleInterval?: number;
+  randomGlitchInterval?: number;
+  linkTo?: string; // Optional prop
+  className?: string; // Accept className prop
 }
 
-const MixText: React.FC<HackingTextProps> = ({ label = "LAURENCE" }) => {
-	const [text, setText] = useState(label);
-	let interval: ReturnType<typeof setInterval> | null = null;
+const GlitchyText: React.FC<GlitchyTextProps> = ({
+  initialLabel,
+  finalLabel,
+  glitchDuration = 500,
+  shuffleInterval = 100,
+  randomGlitchInterval = 8000,
+  linkTo, // Optional prop
+  className, // Accept className prop
+}) => {
+  const [label, setLabel] = useState(initialLabel);
+  const [isHovered, setIsHovered] = useState(false);
 
-	const handleMouseOver = () => {
-		let iteration = 0;
+  const shuffleTimer = useRef<NodeJS.Timeout | null>(null);
+  const glitchTimer = useRef<NodeJS.Timeout | null>(null);
+  const randomGlitchTimer = useRef<NodeJS.Timeout | null>(null);
 
-		if (interval) {
-			clearInterval(interval);
-		}
+  // Function to shuffle text
+  const shuffleText = (text: string) => {
+    const arr = text.split("");
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+    }
+    return arr.join("");
+  };
 
-		interval = setInterval(() => {
-			setText((prev) =>
-				prev
-					.split("")
-					.map((_, index) =>
-						index < iteration ? label[index] : letters[Math.floor(Math.random() * 26)]
-					)
-					.join("")
-			);
+  // Function to generate glitchy text with random characters
+  const getGlitchedText = (text: string) => {
+    const chars = "!@#$%^&*()_+-=[]{}|;:',.<>/?~123467890";
+    return text
+      .split("")
+      .map((char) =>
+        char === " " ? char : chars[Math.floor(Math.random() * chars.length)]
+      )
+      .join("");
+  };
 
-			if (iteration >= label.length) {
-				clearInterval(interval!);
-			}
+  // Function to handle glitch and shuffle to target label
+  const glitchAndShuffleTo = (targetLabel: string) => {
+    if (shuffleTimer.current) clearInterval(shuffleTimer.current);
+    if (glitchTimer.current) clearTimeout(glitchTimer.current);
 
-			iteration += 1 / 3;
-		}, 30);
-	};
+    setLabel(getGlitchedText(targetLabel));
 
-	return (
-		<span
-			className="rounded-border text-white bg-black transition-all transform hover:bg-main hover:text-black"
-			style={{
-				display: "inline-block", // Prevents collapsing during updates
-				minWidth: `${label.length}ch`, // Reserves space based on text length
-				whiteSpace: "nowrap", // Ensures text stays in a single line
-				textAlign: "center", // Keeps text centered
-			}}
-			onMouseOver={handleMouseOver}
-		>
-			{text}
-		</span>
-	);
+    shuffleTimer.current = setInterval(() => {
+      setLabel((prev) => shuffleText(prev)); // Shuffle text
+    }, shuffleInterval);
+
+    glitchTimer.current = setTimeout(() => {
+      if (shuffleTimer.current) clearInterval(shuffleTimer.current);
+      setLabel(targetLabel); // Reset to the original label after shuffling
+    }, glitchDuration);
+  };
+
+  useEffect(() => {
+    randomGlitchTimer.current = setInterval(() => {
+      glitchAndShuffleTo(finalLabel);
+      if (!isHovered && label === finalLabel) {
+        glitchAndShuffleTo(finalLabel);
+      }
+    }, randomGlitchInterval);
+
+    return () => {
+      if (randomGlitchTimer.current) clearInterval(randomGlitchTimer.current);
+    };
+  }, [label, isHovered]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    glitchAndShuffleTo(finalLabel); // On hover, glitch and shuffle to final label
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    glitchAndShuffleTo(finalLabel); // Reset to initial label when not hovered
+  };
+
+  const content = (
+    <motion.div
+      className={`tracking-wide ${className}`} // Apply the className prop
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Typewrite className="" label={label} loadingTime={500} />
+    </motion.div>
+  );
+
+  if (linkTo) {
+    return <Link to={linkTo}>{content}</Link>; // If linkTo is provided, wrap with a Link
+  }
+
+  return content; // If linkTo is not provided, return the content without a link
 };
 
-export { MixText };
+export default GlitchyText;
